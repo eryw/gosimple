@@ -1,18 +1,18 @@
 package gosimple
 
 import (
-	"os"
-	"path/filepath"
+	"github.com/eryw/gosimple/app"
+	"github.com/gorilla/mux"
+	"net/http"
 )
 
-var templatesPath = "templates"
-
-func init() {
-	dir, _ := os.Getwd()
-	templatesPath = filepath.Join(dir, templatesPath)
+func Bootstrap() (err error) {
+	dispatch()
+	return nil
 }
 
-func Bootstrap() (err error) {
-	Dispatch()
-	return nil
+func dispatch() {
+	router := mux.NewRouter()
+	app.Routes(router)
+	http.Handle("/", router)
 }
